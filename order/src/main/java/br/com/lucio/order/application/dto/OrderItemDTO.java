@@ -2,17 +2,15 @@ package br.com.lucio.order.application.dto;
 
 import java.util.UUID;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class OrderItemDTO {
 
+    @JsonIgnore
+    @JsonProperty(value = "id")
     private UUID id;
     private Integer quantity;
     private String description;
