@@ -17,11 +17,17 @@
         <java.version>17</java.version>
         <modelmapper-version>3.1.0</modelmapper-version>
         <flyway-version>8.5.12</flyway-version>
+        <spring-filter-version>2.1.1</spring-filter-version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.turkraft</groupId>
+            <artifactId>spring-filter</artifactId>
+            <version>${spring-filter-version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
