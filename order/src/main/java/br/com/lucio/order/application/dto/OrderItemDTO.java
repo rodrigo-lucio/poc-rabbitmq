@@ -1,10 +1,10 @@
 package br.com.lucio.order.application.dto;
 
-import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.Data;
+
+import java.util.UUID;
 
 @Data
 public class OrderItemDTO {
