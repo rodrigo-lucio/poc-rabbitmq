@@ -1,13 +1,12 @@
 package br.com.lucio.order.shared.util;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import lombok.experimental.UtilityClass;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
-import lombok.experimental.UtilityClass;
+import java.util.HashSet;
+import java.util.Set;
 
 @UtilityClass
 public class Utils {
