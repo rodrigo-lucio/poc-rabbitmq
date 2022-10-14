@@ -2,6 +2,8 @@ package br.com.lucio.order.application.service;
 
 import br.com.lucio.order.application.dto.OrderDTO;
 import br.com.lucio.order.application.exception.ResourceNotFoundException;
+import br.com.lucio.order.shared.translation.TranslationConstants;
+import br.com.lucio.order.shared.translation.TranslationComponent;
 import br.com.lucio.order.domain.entity.Order;
 import br.com.lucio.order.domain.entity.Status;
 import br.com.lucio.order.domain.repository.OrderRepository;
@@ -21,6 +23,9 @@ public class OrderService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private TranslationComponent translation;
+
     public OrderDTO getOrder(UUID id) {
         Order order = findOrder(id);
         return modelMapper.map(order, OrderDTO.class);
@@ -28,7 +33,7 @@ public class OrderService {
 
     private Order findOrder(UUID id) {
         return orderRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(String.format("Order not found with id %s", id)));
+                new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_NOT_FOUND_WITH_ID , id)));
     }
 
     @Transactional
@@ -43,7 +48,7 @@ public class OrderService {
     @Transactional
     public void deleteOrder(UUID id){
         if(!orderRepository.existsById(id)) {
-            throw new ResourceNotFoundException(String.format("Order not found with id %s", id));
+            throw new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_NOT_FOUND_WITH_ID , id));
         }
         orderRepository.deleteById(id);
         orderRepository.flush();

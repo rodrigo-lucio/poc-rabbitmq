@@ -2,6 +2,8 @@ package br.com.lucio.order.application.service;
 
 import br.com.lucio.order.application.dto.OrderItemDTO;
 import br.com.lucio.order.application.exception.ResourceNotFoundException;
+import br.com.lucio.order.shared.translation.TranslationComponent;
+import br.com.lucio.order.shared.translation.TranslationConstants;
 import br.com.lucio.order.domain.entity.Order;
 import br.com.lucio.order.domain.entity.OrderItem;
 import br.com.lucio.order.domain.repository.OrderItemRepository;
@@ -28,19 +30,22 @@ public class OrderItemService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public OrderItemDTO getItem(UUID id) {
-        OrderItem orderItem = findOrderItem(id);
+    @Autowired
+    private TranslationComponent translation;
+
+    public OrderItemDTO getItem(UUID id, UUID orderId) {
+        OrderItem orderItem = findOrderItem(id, orderId);
         return modelMapper.map(orderItem, OrderItemDTO.class);
     }
 
-    private OrderItem findOrderItem(UUID id) {
-        return orderItemRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(String.format("Order item not found with id %s", id)));
+    private OrderItem findOrderItem(UUID id, UUID orderId) {
+        return orderItemRepository.findByIdAndOrderId(id, orderId).orElseThrow(() ->
+                new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_ITEM_NOT_FOUND_WITH_ID_FOR_ORDER_ID, id, orderId)));
     }
 
     public Page<OrderItemDTO> findWithFilter(UUID orderId, Specification<OrderItemDTO> specification, Pageable pageable) {
         if(!orderRepository.existsById(orderId)) {
-            throw new ResourceNotFoundException(String.format("Order not found with id %s", orderId));
+            throw new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_NOT_FOUND_WITH_ID , orderId));
         }
         Specification<OrderItemDTO> spec = Specification.where(orderId(orderId)).and(specification);
         return orderItemRepository.findAll(spec, pageable).map(order -> modelMapper.map(order, OrderItemDTO.class));
@@ -61,13 +66,13 @@ public class OrderItemService {
 
     private Order findOrder(UUID id) {
         return orderRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(String.format("Order not found with id %s", id)));
+                new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_NOT_FOUND_WITH_ID , id)));
     }
 
     @Transactional
     public void deleteItem(UUID id){
         if(!orderItemRepository.existsById(id)) {
-            throw new ResourceNotFoundException(String.format("Order item not found with id %s", id));
+            throw new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_NOT_FOUND_WITH_ID , id));
         }
         orderItemRepository.deleteById(id);
         orderItemRepository.flush();

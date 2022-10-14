@@ -25,8 +25,8 @@ public class OrderItemController {
     private OrderItemService orderItemService;
 
     @GetMapping("/{id}")
-    public OrderItemDTO get(@PathVariable UUID id) {
-        return orderItemService.getItem(id);
+    public OrderItemDTO get(@PathVariable UUID orderId, @PathVariable UUID id) {
+        return orderItemService.getItem(id, orderId);
     }
 
     @GetMapping
