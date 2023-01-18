@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.time.Duration;
+import java.time.Instant;
 
 @Component
 @Slf4j
@@ -23,18 +25,17 @@ public class LoggingFilter extends OncePerRequestFilter {
         ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(request);
         ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
 
-        long startTime = System.currentTimeMillis();
+        Instant startTime = Instant.now();
         filterChain.doFilter(requestWrapper, responseWrapper);
-        long timeTaken = System.currentTimeMillis() - startTime;
-
+        Duration totalTime = Duration.between(startTime, Instant.now());
         String requestBody = getStringValue(requestWrapper.getContentAsByteArray(),
                 request.getCharacterEncoding());
         requestBody = requestBody.replaceAll("\\s*[\\r\\n]+\\s*", "").trim();
 
         String responseBody = getStringValue(responseWrapper.getContentAsByteArray(), response.getCharacterEncoding());
 
-        log.info("Request processed: URI={}, Method={}, Payload={}; Response code={}, Response={}, Time taken={}",
-                request.getRequestURI(), request.getMethod(), requestBody, response.getStatus(), responseBody, timeTaken);
+        log.info("Request processed: URI={}, Method={}, Payload={}; Response code={}, Response={}, Duration={}s",
+                request.getRequestURI(), request.getMethod(), requestBody, response.getStatus(), responseBody, totalTime.getSeconds());
         responseWrapper.copyBodyToResponse();
     }
 
