@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +20,9 @@ public class OrderDTO {
     @JsonIgnore
     @JsonProperty(value = "status")
     private Status status;
+
+    @JsonProperty(value = "expectedDeliveryDate")
+    private LocalDate expectedDeliveryDate;
 
     private List<OrderItemDTO> items = new ArrayList<>();
 

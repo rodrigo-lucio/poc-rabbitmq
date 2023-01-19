@@ -16,9 +16,4 @@ public class TranslationComponent {
         return messageSource.getMessage(key, args, Locale.ENGLISH);
     }
 
-    public String getMessage(String key) {
-        return messageSource.getMessage(key, new Object[]{}, Locale.ENGLISH);
-    }
-
-
 }
