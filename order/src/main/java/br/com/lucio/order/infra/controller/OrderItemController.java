@@ -2,12 +2,15 @@ package br.com.lucio.order.infra.controller;
 
 import br.com.lucio.order.application.dto.OrderItemDTO;
 import br.com.lucio.order.application.service.OrderItemService;
+import br.com.lucio.order.infra.converter.PageDTOConverter;
+import br.com.lucio.order.infra.dto.PageDTO;
 import com.turkraft.springfilter.boot.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -24,26 +27,35 @@ public class OrderItemController {
     @Autowired
     private OrderItemService orderItemService;
 
+    @Autowired
+    private PageDTOConverter<OrderItemDTO> converter;
+
     @GetMapping("/{id}")
     public OrderItemDTO get(@PathVariable UUID orderId, @PathVariable UUID id) {
         return orderItemService.getItem(id, orderId);
     }
 
     @GetMapping
-    public Page<OrderItemDTO> getOrderItems(@PathVariable UUID orderId, @Filter Specification<OrderItemDTO> specification, @PageableDefault Pageable pageable) {
-        return orderItemService.findWithFilter(orderId, specification, pageable);
+    public PageDTO<OrderItemDTO> getOrderItems(@PathVariable UUID orderId, @Filter Specification<OrderItemDTO> specification, @PageableDefault Pageable pageable) {
+        return  converter.toPageDTO(orderItemService.findWithFilter(orderId, specification, pageable));
     }
 
     @PostMapping
     public ResponseEntity<OrderItemDTO> addItem(@PathVariable UUID orderId, @RequestBody @Valid OrderItemDTO orderItemDTO, UriComponentsBuilder uriBuilder) {
-        OrderItemDTO itemAdded = orderItemService.addItem(orderId, orderItemDTO);
+        OrderItemDTO itemAdded = orderItemService.add(orderId, orderItemDTO);
         URI uri = uriBuilder.path("/order/{orderId}/item/{id}").buildAndExpand(orderId, itemAdded.getId()).toUri();
         return ResponseEntity.created(uri).body(itemAdded);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<OrderItemDTO> updatePatch(@PathVariable UUID orderId, @PathVariable UUID id, @RequestBody @Valid OrderItemDTO orderItemDTO){
+        OrderItemDTO updatedItem = orderItemService.updatePatch(orderId, id, orderItemDTO);
+        return ResponseEntity.ok(updatedItem);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable @NotNull UUID id) {
-        orderItemService.deleteItem(id);
+        orderItemService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

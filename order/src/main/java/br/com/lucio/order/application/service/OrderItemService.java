@@ -8,6 +8,7 @@ import br.com.lucio.order.domain.entity.Order;
 import br.com.lucio.order.domain.entity.OrderItem;
 import br.com.lucio.order.domain.repository.OrderItemRepository;
 import br.com.lucio.order.domain.repository.OrderRepository;
+import br.com.lucio.order.shared.util.Utils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,14 +34,33 @@ public class OrderItemService {
     @Autowired
     private TranslationComponent translation;
 
-    public OrderItemDTO getItem(UUID id, UUID orderId) {
-        OrderItem orderItem = findOrderItem(id, orderId);
+    public OrderItemDTO getItem(UUID orderItemId, UUID orderId) {
+        OrderItem orderItem = findOrderItem(orderItemId, orderId);
         return modelMapper.map(orderItem, OrderItemDTO.class);
     }
 
-    private OrderItem findOrderItem(UUID id, UUID orderId) {
-        return orderItemRepository.findByIdAndOrderId(id, orderId).orElseThrow(() ->
-                new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_ITEM_NOT_FOUND_WITH_ID_FOR_ORDER_ID, id, orderId)));
+    private OrderItem findOrderItem(UUID orderItemId, UUID orderId) {
+        return orderItemRepository.findByIdAndOrderId(orderItemId, orderId).orElseThrow(() ->
+                new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_ITEM_NOT_FOUND_WITH_ID_FOR_ORDER_ID, orderItemId, orderId)));
+    }
+
+
+    @Transactional
+    public OrderItemDTO updatePatch(UUID orderId, UUID orderItemId, OrderItemDTO orderItemDTO) {
+        OrderItem savedItem = findOrderItem(orderItemId, orderId);
+        OrderItem payload = modelMapper.map(orderItemDTO, OrderItem.class);
+        Utils.copyNonNullProperties(payload, savedItem);
+        orderItemRepository.saveAndFlush(savedItem);
+        return modelMapper.map(savedItem, OrderItemDTO.class);
+    }
+
+    @Transactional
+    public void delete(UUID orderItemId){
+        if(!orderItemRepository.existsById(orderItemId)) {
+            throw new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_NOT_FOUND_WITH_ID , orderItemId));
+        }
+        orderItemRepository.deleteById(orderItemId);
+        orderItemRepository.flush();
     }
 
     public Page<OrderItemDTO> findWithFilter(UUID orderId, Specification<OrderItemDTO> specification, Pageable pageable) {
@@ -50,32 +70,25 @@ public class OrderItemService {
         Specification<OrderItemDTO> spec = Specification.where(orderId(orderId)).and(specification);
         return orderItemRepository.findAll(spec, pageable).map(order -> modelMapper.map(order, OrderItemDTO.class));
     }
+
     private Specification<OrderItemDTO> orderId(UUID orderId) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("order").get("id"), orderId);
     }
 
     @Transactional
-    public OrderItemDTO addItem(UUID orderId, OrderItemDTO orderItemDTO) {
+    public OrderItemDTO add(UUID orderId, OrderItemDTO orderItemDTO) {
         Order order = findOrder(orderId);
         OrderItem orderItem = modelMapper.map(orderItemDTO, OrderItem.class);
         orderItem.setOrder(order);
-        orderItem = orderItemRepository.saveAndFlush(orderItem);
+        orderItemRepository.saveAndFlush(orderItem);
         return modelMapper.map(orderItem, OrderItemDTO.class);
     }
 
-    private Order findOrder(UUID id) {
-        return orderRepository.findById(id).orElseThrow(() ->
-                new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_NOT_FOUND_WITH_ID , id)));
+    private Order findOrder(UUID orderItemId) {
+        return orderRepository.findById(orderItemId).orElseThrow(() ->
+                new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_NOT_FOUND_WITH_ID , orderItemId)));
     }
 
-    @Transactional
-    public void deleteItem(UUID id){
-        if(!orderItemRepository.existsById(id)) {
-            throw new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_NOT_FOUND_WITH_ID , id));
-        }
-        orderItemRepository.deleteById(id);
-        orderItemRepository.flush();
-    }
 
 }
