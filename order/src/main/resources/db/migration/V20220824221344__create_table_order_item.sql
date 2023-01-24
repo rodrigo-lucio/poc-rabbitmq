@@ -3,6 +3,7 @@ CREATE TABLE order_item (
   order_id uuid NOT NULL,
   description varchar(255) NOT NULL,
   quantity numeric(19) NOT NULL,
+  expected_delivery_date DATE,
   created_at TIMESTAMP WITHOUT TIME ZONE,
   updated_at TIMESTAMP WITHOUT TIME ZONE,
   CONSTRAINT pk_order_item_id PRIMARY KEY (id),
