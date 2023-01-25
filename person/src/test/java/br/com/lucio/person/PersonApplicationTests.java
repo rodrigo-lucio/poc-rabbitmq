@@ -1,4 +1,4 @@
-package br.com.lucio;
+package br.com.lucio.person;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

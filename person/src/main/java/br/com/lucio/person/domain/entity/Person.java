@@ -1,4 +1,4 @@
-package br.com.lucio.domain.entity;
+package br.com.lucio.person.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

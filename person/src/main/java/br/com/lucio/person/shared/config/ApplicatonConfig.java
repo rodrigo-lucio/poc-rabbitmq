@@ -1,4 +1,4 @@
-package br.com.lucio.shared.config;
+package br.com.lucio.person.shared.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

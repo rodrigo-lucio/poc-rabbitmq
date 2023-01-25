@@ -1,7 +1,7 @@
-package br.com.lucio.infra.controller;
+package br.com.lucio.person.infra.controller;
 
-import br.com.lucio.application.dto.PersonDTO;
-import br.com.lucio.application.service.PersonService;
+import br.com.lucio.person.application.dto.PersonDTO;
+import br.com.lucio.person.application.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

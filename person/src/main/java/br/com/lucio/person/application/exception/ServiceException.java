@@ -1,4 +1,4 @@
-package br.com.lucio.domain.entity;
+package br.com.lucio.person.application.exception;
 
 public class ServiceException extends RuntimeException {
 

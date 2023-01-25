@@ -1,5 +1,6 @@
-package br.com.lucio.domain.entity;
+package br.com.lucio.person.domain.entity;
 
+import br.com.lucio.person.application.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.regex.Pattern;
@@ -16,15 +17,16 @@ public class Document {
 
     private Document(String documentNumber) {
         if (!isValido(documentNumber)) {
-            throw new ServiceException("Field document is invalid");
+            throw new ServiceException("Invalid document");
         }
         this.documentNumber = documentNumber;
     }
 
     public static boolean isValido(String document) {
         if (StringUtils.isBlank(document)) {
-            throw new ServiceException("Field 'document' must not be blank");
+            throw new ServiceException("Document must not be blank");
         }
+
 
         if (!Pattern.matches("\\d+", document)) {
             return false;

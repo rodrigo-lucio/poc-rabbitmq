@@ -1,9 +1,9 @@
-package br.com.lucio.application.service;
+package br.com.lucio.person.application.service;
 
-import br.com.lucio.application.dto.PersonDTO;
-import br.com.lucio.domain.entity.Document;
-import br.com.lucio.domain.entity.Person;
-import br.com.lucio.domain.entity.PersonRepository;
+import br.com.lucio.person.application.dto.PersonDTO;
+import br.com.lucio.person.domain.entity.Document;
+import br.com.lucio.person.domain.entity.Person;
+import br.com.lucio.person.domain.entity.PersonRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

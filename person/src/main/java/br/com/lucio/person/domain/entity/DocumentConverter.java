@@ -1,4 +1,4 @@
-package br.com.lucio.domain.entity;
+package br.com.lucio.person.domain.entity;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

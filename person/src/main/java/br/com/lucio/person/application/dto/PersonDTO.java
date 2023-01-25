@@ -1,6 +1,5 @@
-package br.com.lucio.application.dto;
+package br.com.lucio.person.application.dto;
 
-import br.com.lucio.domain.entity.Document;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

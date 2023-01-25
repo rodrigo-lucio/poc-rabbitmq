@@ -1,4 +1,4 @@
-package br.com.lucio;
+package br.com.lucio.person;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
