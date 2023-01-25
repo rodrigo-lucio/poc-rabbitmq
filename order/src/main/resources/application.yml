@@ -8,3 +8,12 @@ spring:
     password: postgres
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    show-sql: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+
+

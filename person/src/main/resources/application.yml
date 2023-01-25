@@ -1,1 +1,12 @@
-
+spring:
+  application:
+    name: person-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/person?useTimezone=true&serverTimezone=UTC
+    username: postgres
+    password: postgres
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+server:
+  port: 8082
