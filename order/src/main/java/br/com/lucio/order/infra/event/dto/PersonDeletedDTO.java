@@ -11,6 +11,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class PersonDeletedDTO {
 
-    private UUID idPersonDeleted;
+    private UUID id;
 
 }

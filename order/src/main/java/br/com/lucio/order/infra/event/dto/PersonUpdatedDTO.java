@@ -1,5 +1,6 @@
 package br.com.lucio.order.infra.event.dto;
 
+import br.com.lucio.order.application.dto.PersonDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PersonUpdatedDTO {
 
-    private PersonDTO personDTO;
+    private PersonDTO person;
 
 }
