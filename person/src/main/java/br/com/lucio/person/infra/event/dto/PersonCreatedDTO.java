@@ -9,6 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class PersonCreatedDTO {
 
-    private PersonDTO personDTO;
+    private PersonDTO person;
 
 }
