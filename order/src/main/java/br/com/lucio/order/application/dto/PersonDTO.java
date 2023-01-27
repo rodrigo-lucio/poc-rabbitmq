@@ -1,7 +1,5 @@
-package br.com.lucio.order.infra.event.dto;
+package br.com.lucio.order.application.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.UUID;
