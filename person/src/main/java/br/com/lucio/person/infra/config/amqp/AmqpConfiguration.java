@@ -1,8 +1,6 @@
 package br.com.lucio.person.infra.config.amqp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.core.ExchangeBuilder;
-import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -17,12 +15,12 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 public class AmqpConfiguration {
 
     @Bean
-    public RabbitAdmin criaRabbitAdmin(ConnectionFactory connectionFactory) {
+    public RabbitAdmin createConnectionFactory(ConnectionFactory connectionFactory) {
         return new RabbitAdmin(connectionFactory);
     }
 
     @Bean
-    public ApplicationListener<ApplicationReadyEvent> inicializaAdmin(RabbitAdmin rabbitAdmin) {
+    public ApplicationListener<ApplicationReadyEvent> initialize(RabbitAdmin rabbitAdmin) {
         return event -> rabbitAdmin.initialize();
     }
 
@@ -39,21 +37,6 @@ public class AmqpConfiguration {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(messageConverter);
         return rabbitTemplate;
-    }
-
-    @Bean
-    public FanoutExchange fanoutExchangePersonCreated() {
-        return ExchangeBuilder.fanoutExchange(EventsConstants.EXCHANGE_EVENTS_PERSON_CREATED).build();
-    }
-
-    @Bean
-    public FanoutExchange fanoutExchangePersonUpdated() {
-        return ExchangeBuilder.fanoutExchange(EventsConstants.EXCHANGE_EVENTS_PERSON_UPDATED).build();
-    }
-
-    @Bean
-    public FanoutExchange fanoutExchangePersonDeleted() {
-        return ExchangeBuilder.fanoutExchange(EventsConstants.EXCHANGE_EVENTS_PERSON_DELETED).build();
     }
 
 

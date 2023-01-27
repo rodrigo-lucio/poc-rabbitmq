@@ -20,22 +20,22 @@ public class PersonReplicationEventListener {
 
     @Async
     @EventListener
-    public void personCreatedEvent(PersonCreatedDTO personCreated){
-        log.info("-----------> Publishing event person created {}", personCreated.getPersonDTO());
+    public void publishPersonCreated(PersonCreatedDTO personCreated){
+        log.info("-----------> Publishing event person created {}", personCreated.getPerson());
         rabbitTemplate.convertAndSend(EventsConstants.EXCHANGE_EVENTS_PERSON_CREATED, "", personCreated);
     }
 
     @Async
     @EventListener
-    public void personUpdatedEvent(PersonUpdatedDTO personUpdated){
-        log.info("-----------> Publishing event person updated {}", personUpdated.getPersonDTO());
+    public void publishPersonUpdated(PersonUpdatedDTO personUpdated){
+        log.info("-----------> Publishing event person updated {}", personUpdated.getPerson());
         rabbitTemplate.convertAndSend(EventsConstants.EXCHANGE_EVENTS_PERSON_UPDATED, "", personUpdated);
     }
 
     @Async
     @EventListener
-    public void personDeletedEvent(PersonDeletedDTO personDeleted){
-        log.info("-----------> Publishing event person deleted {}", personDeleted.getIdPersonDeleted());
+    public void publicPersonDeleted(PersonDeletedDTO personDeleted){
+        log.info("-----------> Publishing event person deleted {}", personDeleted.getId());
         rabbitTemplate.convertAndSend(EventsConstants.EXCHANGE_EVENTS_PERSON_UPDATED, "", personDeleted);
     }
 
