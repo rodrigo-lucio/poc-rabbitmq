@@ -36,7 +36,7 @@ public class PersonReplicationEventListener {
     @EventListener
     public void publicPersonDeleted(PersonDeletedDTO personDeleted){
         log.info("-----------> Publishing event person deleted {}", personDeleted.getId());
-        rabbitTemplate.convertAndSend(EventsConstants.EXCHANGE_EVENTS_PERSON_UPDATED, "", personDeleted);
+        rabbitTemplate.convertAndSend(EventsConstants.EXCHANGE_EVENTS_PERSON_DELETED, "", personDeleted);
     }
 
 }
