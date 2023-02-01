@@ -2,9 +2,8 @@ package br.com.lucio.person.infra.controller;
 
 import br.com.lucio.person.application.dto.PersonDTO;
 import br.com.lucio.person.application.service.PersonService;
-import br.com.lucio.person.infra.event.dto.PersonCreatedDTO;
-import br.com.lucio.person.infra.event.dto.PersonDeletedDTO;
-import br.com.lucio.person.infra.event.dto.PersonUpdatedDTO;
+import br.com.lucio.person.infra.event.dto.PersonCrudEventDTO;
+import br.com.lucio.person.infra.event.dto.EventType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
@@ -36,14 +35,14 @@ public class PersonController {
     public ResponseEntity<PersonDTO> create(@RequestBody @Valid PersonDTO dto, UriComponentsBuilder uriBuilder) {
         PersonDTO personCreated = personService.create(dto);
         URI uri = uriBuilder.path("/person/{id}").buildAndExpand(personCreated.getId()).toUri();
-        publisher.publishEvent(new PersonCreatedDTO(personCreated));
+        publisher.publishEvent(new PersonCrudEventDTO(personCreated, EventType.CREATE));
         return ResponseEntity.created(uri).body(personCreated);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PersonDTO> update(@PathVariable @NotNull UUID id, @RequestBody @Valid PersonDTO dto) {
         PersonDTO personUpdated = personService.update(id, dto);
-        publisher.publishEvent(new PersonUpdatedDTO(personUpdated));
+        publisher.publishEvent(new PersonCrudEventDTO(personUpdated, EventType.UPDATE));
         return ResponseEntity.ok(personUpdated);
     }
 
@@ -57,7 +56,7 @@ public class PersonController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable @NotNull UUID id) {
         personService.delete(id);
-        publisher.publishEvent(new PersonDeletedDTO(id));
+        publisher.publishEvent(new PersonCrudEventDTO(new PersonDTO(id), EventType.DELETE));
         return ResponseEntity.noContent().build();
     }
 

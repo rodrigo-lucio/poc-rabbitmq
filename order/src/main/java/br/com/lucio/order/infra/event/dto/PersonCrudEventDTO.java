@@ -1,15 +1,17 @@
 package br.com.lucio.order.infra.event.dto;
 
-import br.com.lucio.order.application.dto.PersonDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import br.com.lucio.order.application.dto.PersonDTO;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class PersonUpdatedDTO {
+@ToString
+public class PersonCrudEventDTO {
 
     private PersonDTO person;
+    private EventType type;
 
 }

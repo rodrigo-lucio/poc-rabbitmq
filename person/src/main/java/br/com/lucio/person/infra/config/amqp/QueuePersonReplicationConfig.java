@@ -11,17 +11,7 @@ public class QueuePersonReplicationConfig {
 
     @Bean
     public FanoutExchange fanoutExchangePersonCreated() {
-        return ExchangeBuilder.fanoutExchange(EventsConstants.EXCHANGE_EVENTS_PERSON_CREATED).build();
-    }
-
-    @Bean
-    public FanoutExchange fanoutExchangePersonUpdated() {
-        return ExchangeBuilder.fanoutExchange(EventsConstants.EXCHANGE_EVENTS_PERSON_UPDATED).build();
-    }
-
-    @Bean
-    public FanoutExchange fanoutExchangePersonDeleted() {
-        return ExchangeBuilder.fanoutExchange(EventsConstants.EXCHANGE_EVENTS_PERSON_DELETED).build();
+        return ExchangeBuilder.fanoutExchange(EventsConstants.EXCHANGE_EVENTS_PERSON_CRUD).build();
     }
 
 }

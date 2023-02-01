@@ -31,6 +31,18 @@ public class AmqpConfiguration {
         ObjectMapper objectMapper = builder.createXmlMapper(false).build();
         Jackson2JsonMessageConverter jackson2JsonMessageConverter = new Jackson2JsonMessageConverter(objectMapper);
         return jackson2JsonMessageConverter;
+
+        /*
+        *
+        *
+        *  //VER COMO O CARINHA DA ALGAWORKS FEZ
+        *
+        *
+         */
+
+
+
+
     }
 
     @Bean
