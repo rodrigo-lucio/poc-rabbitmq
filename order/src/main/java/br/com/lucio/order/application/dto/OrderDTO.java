@@ -2,15 +2,18 @@ package br.com.lucio.order.application.dto;
 
 import br.com.lucio.order.domain.entity.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDTO {
 
     @JsonIgnore
@@ -23,6 +26,9 @@ public class OrderDTO {
 
     @JsonProperty(value = "expectedDeliveryDate")
     private LocalDate expectedDeliveryDate;
+
+    @JsonProperty(value = "person")
+    private PersonDTO person;
 
     private List<OrderItemDTO> items = new ArrayList<>();
 

@@ -1,4 +1,4 @@
-package br.com.lucio.order.application.service;
+package br.com.lucio.order.domain.repository;
 
 import br.com.lucio.order.domain.entity.Person;
 import org.springframework.data.jpa.repository.JpaRepository;

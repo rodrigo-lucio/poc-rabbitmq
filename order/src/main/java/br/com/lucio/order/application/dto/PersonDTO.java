@@ -1,5 +1,6 @@
 package br.com.lucio.order.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.util.UUID;
@@ -8,6 +9,7 @@ import java.util.UUID;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PersonDTO {
 
     private UUID id;
