@@ -1,9 +1,8 @@
 package br.com.lucio.order.application.service;
 
-import br.com.lucio.order.application.exception.ResourceNotFoundException;
 import br.com.lucio.order.domain.entity.Person;
-import br.com.lucio.order.shared.translation.TranslationConstants;
-import br.com.lucio.order.shared.util.Utils;
+import br.com.lucio.order.domain.repository.PersonRepository;
+import br.com.lucio.order.infra.event.dto.PersonCrudEventDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,4 +40,12 @@ public class PersonService {
         personRepository.flush();
     }
 
+    @Transactional
+    public void crudEvent(PersonCrudEventDTO personCrudEventDTO) {
+        switch (personCrudEventDTO.getType()) {
+            case CREATE -> this.create(personCrudEventDTO.getPerson());
+            case UPDATE -> this.update(personCrudEventDTO.getPerson());
+            case DELETE -> this.delete(personCrudEventDTO.getPerson().getId());
+        }
+    }
 }
