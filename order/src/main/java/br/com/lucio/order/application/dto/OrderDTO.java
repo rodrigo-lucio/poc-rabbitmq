@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class OrderDTO {
 
     @JsonProperty(value = "person")
     private PersonDTO person;
+
+    private BigDecimal amount;
 
     private List<OrderItemDTO> items = new ArrayList<>();
 

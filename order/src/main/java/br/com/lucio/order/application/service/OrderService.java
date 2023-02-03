@@ -3,6 +3,7 @@ package br.com.lucio.order.application.service;
 import br.com.lucio.order.application.dto.OrderDTO;
 import br.com.lucio.order.application.exception.ResourceNotFoundException;
 import br.com.lucio.order.application.exception.ServiceException;
+import br.com.lucio.order.domain.entity.OrderItem;
 import br.com.lucio.order.domain.entity.Person;
 import br.com.lucio.order.domain.repository.PersonRepository;
 import br.com.lucio.order.shared.translation.TranslationConstants;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -52,8 +55,6 @@ public class OrderService {
 
     private Order validate(OrderDTO orderDTO) {
         Order order =  modelMapper.map(orderDTO, Order.class);
-        order.setStatus(Status.REGISTERED);
-
         if(Objects.isNull(orderDTO.getPerson()) || Objects.isNull(orderDTO.getPerson().getId())) {
             throw new ResourceNotFoundException(translation.getMessage(TranslationConstants.PERSON_CANNOT_BE_NULL));
         }
@@ -63,9 +64,22 @@ public class OrderService {
             throw new ServiceException(translation.getMessage(TranslationConstants.PERSON_IS_NOT_ACTIVE));
         }
 
+        order.setStatus(Status.REGISTERED);
         order.setPerson(person);
-        order.getItems().forEach(item -> item.setOrder(order));
+        order.getItems().forEach(item -> {
+            item.setOrder(order);
+            item.setUnitaryValue(item.getUnitaryValue().setScale(2, RoundingMode.HALF_UP));
+            item.setAmount(calculateAmount(item));
+        });
+        BigDecimal amountOrder = order.getItems().stream()
+                .map(OrderService::calculateAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        order.setAmount(amountOrder);
         return order;
+    }
+
+    private static BigDecimal calculateAmount(OrderItem item) {
+        return item.getUnitaryValue().multiply(new BigDecimal(item.getQuantity())).setScale(2, RoundingMode.HALF_UP);
     }
 
     @Transactional
