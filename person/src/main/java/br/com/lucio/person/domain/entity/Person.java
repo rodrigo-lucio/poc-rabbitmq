@@ -46,6 +46,10 @@ public class Person {
     @Column(name = "email")
     private String email;
 
+    @NotNull
+    @Column(name = "active")
+    private Boolean active;
+
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -53,4 +57,5 @@ public class Person {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 }

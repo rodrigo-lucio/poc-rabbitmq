@@ -41,6 +41,7 @@ public class PersonService {
     public PersonDTO create(PersonDTO personDTO) {
         Person person = modelMapper.map(personDTO, Person.class);
         person.setDocument(Document.of(personDTO.getDocument()));
+        person.setActive(Boolean.TRUE);
         personRepository.saveAndFlush(person);
         return toPersonDto(person);
     }

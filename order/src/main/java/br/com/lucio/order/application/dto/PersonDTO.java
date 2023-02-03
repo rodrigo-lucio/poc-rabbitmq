@@ -16,5 +16,6 @@ public class PersonDTO {
     private String name;
     private String document;
     private String email;
+    private Boolean active;
 
 }

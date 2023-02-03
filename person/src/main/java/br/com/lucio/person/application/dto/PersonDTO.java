@@ -1,6 +1,7 @@
 package br.com.lucio.person.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PersonDTO {
 
     @JsonIgnore
@@ -21,7 +23,7 @@ public class PersonDTO {
     private String name;
     private String document;
     private String email;
-
+    private Boolean active;
 
     public PersonDTO(UUID id){
         this.id = id;

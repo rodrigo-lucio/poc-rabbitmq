@@ -3,18 +3,12 @@ package br.com.lucio.order.domain.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
@@ -45,9 +39,9 @@ public class Person {
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
-    private OffsetDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(name = "updated_at")
-    private OffsetDateTime updatedAt;
+    private LocalDateTime updatedAt;
 }

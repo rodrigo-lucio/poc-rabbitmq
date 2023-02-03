@@ -3,6 +3,7 @@ CREATE TABLE person (
     name VARCHAR(255) NOT NULL,
     document VARCHAR(255) NOT NULL,
     email VARCHAR(255),
+    active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP WITHOUT TIME ZONE,
     updated_at TIMESTAMP WITHOUT TIME ZONE,
     CONSTRAINT pk_person PRIMARY KEY (id)
