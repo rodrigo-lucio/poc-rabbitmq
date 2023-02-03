@@ -2,6 +2,7 @@ package br.com.lucio.order.application.service;
 
 import br.com.lucio.order.application.dto.OrderDTO;
 import br.com.lucio.order.application.exception.ResourceNotFoundException;
+import br.com.lucio.order.application.exception.ServiceException;
 import br.com.lucio.order.domain.entity.Person;
 import br.com.lucio.order.domain.repository.PersonRepository;
 import br.com.lucio.order.shared.translation.TranslationConstants;
@@ -24,7 +25,7 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private PersonRepository personRepository;
+    private PersonService personService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -57,12 +58,11 @@ public class OrderService {
             throw new ResourceNotFoundException(translation.getMessage(TranslationConstants.PERSON_CANNOT_BE_NULL));
         }
 
-        if(!personRepository.existsById(orderDTO.getPerson().getId())) {
-            throw new ResourceNotFoundException(translation.getMessage(TranslationConstants.PERSON_NOT_FOUND_WITH_ID , orderDTO.getPerson().getId()));
+        Person person = personService.findPerson(orderDTO.getPerson().getId());
+        if(Boolean.FALSE.equals(person.getActive())) {
+            throw new ServiceException(translation.getMessage(TranslationConstants.PERSON_IS_NOT_ACTIVE));
         }
 
-        Person person = new Person();
-        person.setId(orderDTO.getPerson().getId());
         order.setPerson(person);
         order.getItems().forEach(item -> item.setOrder(order));
         return order;

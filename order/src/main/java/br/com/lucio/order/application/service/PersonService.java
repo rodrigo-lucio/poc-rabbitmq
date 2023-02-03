@@ -67,7 +67,7 @@ public class PersonService {
         personRepository.flush();
     }
 
-    private Person findPerson(UUID id) {
+    public Person findPerson(UUID id) {
         return personRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException(translation.getMessage(TranslationConstants.PERSON_NOT_FOUND_WITH_ID, id)));
     }

@@ -11,4 +11,6 @@ public class TranslationConstants {
     public static final String PERSON_NOT_FOUND_WITH_ID = "orders.person_not_found_with_id";
     public static final String PERSON_CANNOT_BE_NULL = "orders.person_cannot_be_null";
 
+    public static final String PERSON_IS_NOT_ACTIVE = "orders.person_is_not_active";
+
 }
