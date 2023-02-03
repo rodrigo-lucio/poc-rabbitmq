@@ -44,7 +44,7 @@ public class OrderService {
 
     @Transactional
     public OrderDTO createOrder(OrderDTO orderDTO) {
-        Order order =  validate(orderDTO);
+        Order order = validate(orderDTO);
         orderRepository.saveAndFlush(order);
         return modelMapper.map(order, OrderDTO.class);
     }
@@ -61,12 +61,10 @@ public class OrderService {
             throw new ResourceNotFoundException(translation.getMessage(TranslationConstants.PERSON_NOT_FOUND_WITH_ID , orderDTO.getPerson().getId()));
         }
 
-
         Person person = new Person();
         person.setId(orderDTO.getPerson().getId());
         order.setPerson(person);
         order.getItems().forEach(item -> item.setOrder(order));
-
         return order;
     }
 
