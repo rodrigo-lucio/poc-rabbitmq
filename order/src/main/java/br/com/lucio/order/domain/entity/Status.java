@@ -1,7 +1,7 @@
 package br.com.lucio.order.domain.entity;
 
 public enum Status {
-    REGISTERED,
+    CREATED,
     PROCESSING_PAYMENT,
     PAYMENT_CONFIRMED;
 }
