@@ -2,7 +2,7 @@ CREATE TABLE order_payment
 (
     id                 UUID         NOT NULL,
     order_id           UUID         NOT NULL,
-    credit_card_number VARCHAR(50) NOT NULL,
+    credit_card_number VARCHAR(50)  NOT NULL,
     card_holder_name   VARCHAR(255) NOT NULL,
     validity_month     INTEGER      NOT NULL,
     validity_year      INTEGER      NOT NULL,
