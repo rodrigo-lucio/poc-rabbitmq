@@ -51,17 +51,14 @@ public class OrderPayment {
 
     @NotNull
     @Column(name = "validity_month")
-    @Size(max = 12)
     private Integer validityMonth;
 
     @NotNull
     @Column(name = "validity_year")
-    @Size(max = 12)
     private Integer validityYear;
 
     @NotNull
     @Column(name = "security_code")
-    @Size(max = 12)
     private Integer securityCode;
 
     @NotNull
