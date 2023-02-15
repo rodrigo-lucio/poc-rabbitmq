@@ -55,6 +55,10 @@ public class Order {
     @Column(name = "amount")
     private BigDecimal amount;
 
+    @Size(min = 1)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderPayment> payments = new ArrayList<>();
+
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

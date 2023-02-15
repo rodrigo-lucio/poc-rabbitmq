@@ -35,4 +35,6 @@ public class OrderDTO {
 
     private List<OrderItemDTO> items = new ArrayList<>();
 
+    private List<OrderPaymentDTO> payments = new ArrayList<>();
+
 }
