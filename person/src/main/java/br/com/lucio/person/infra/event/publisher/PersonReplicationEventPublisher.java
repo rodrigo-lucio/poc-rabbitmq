@@ -1,4 +1,4 @@
-package br.com.lucio.person.infra.event;
+package br.com.lucio.person.infra.event.publisher;
 
 import br.com.lucio.person.infra.config.amqp.EventsConstants;
 import br.com.lucio.person.infra.event.dto.PersonCrudEventDTO;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class PersonReplicationEventListener {
+public class PersonReplicationEventPublisher {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;

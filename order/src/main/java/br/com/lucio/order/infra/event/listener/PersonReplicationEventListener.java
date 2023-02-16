@@ -1,4 +1,4 @@
-package br.com.lucio.order.infra.event;
+package br.com.lucio.order.infra.event.listener;
 
 import br.com.lucio.order.application.service.PersonService;
 import br.com.lucio.order.infra.config.EventsConstants;
@@ -21,8 +21,8 @@ public class PersonReplicationEventListener {
     private PersonService service;
 
     @RabbitListener(queues = EventsConstants.QUEUE_EVENTS_PERSON_CRUD, containerFactory = "rabbitListenerContainerFactory")
-    public void personCreatedEvent(PersonCrudEventDTO personCrudEventDTO,
-                                   Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws IOException {
+    public void personCreatedEventListener(PersonCrudEventDTO personCrudEventDTO,
+                                           Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws IOException {
         log.info("-----------> Received crud event for person: {}", personCrudEventDTO);
         service.crudEvent(personCrudEventDTO);
         channel.basicAck(tag, false);

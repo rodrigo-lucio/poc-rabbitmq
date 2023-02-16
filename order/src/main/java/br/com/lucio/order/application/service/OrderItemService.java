@@ -44,7 +44,6 @@ public class OrderItemService {
                 new ResourceNotFoundException(translation.getMessage(TranslationConstants.ORDER_ITEM_NOT_FOUND_WITH_ID_FOR_ORDER_ID, orderItemId, orderId)));
     }
 
-
     @Transactional
     public OrderItemDTO updatePatch(UUID orderId, UUID orderItemId, OrderItemDTO orderItemDTO) {
         OrderItem savedItem = findOrderItem(orderItemId, orderId);
