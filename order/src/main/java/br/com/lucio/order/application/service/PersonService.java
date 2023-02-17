@@ -1,5 +1,6 @@
 package br.com.lucio.order.application.service;
 
+import br.com.lucio.order.application.dto.PersonDTO;
 import br.com.lucio.order.application.exception.ResourceNotFoundException;
 import br.com.lucio.order.domain.entity.Person;
 import br.com.lucio.order.domain.repository.OrderRepository;
@@ -7,13 +8,10 @@ import br.com.lucio.order.domain.repository.PersonRepository;
 import br.com.lucio.order.infra.event.dto.PersonCrudEventDTO;
 import br.com.lucio.order.shared.translation.TranslationComponent;
 import br.com.lucio.order.shared.translation.TranslationConstants;
-import org.hibernate.exception.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import br.com.lucio.order.application.dto.PersonDTO;
 
 import java.util.UUID;
 

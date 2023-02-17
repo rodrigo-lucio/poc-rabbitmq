@@ -38,7 +38,11 @@ public class AmqpConfiguration {
         /*
         *
         *
-        *  //VER COMO O CARINHA DA ALGAWORKS FEZ
+        *      @Bean
+    public Jackson2JsonMessageConverter messageConverter(ObjectMapper objectMapper) {
+        objectMapper.findAndRegisterModules();
+        return new Jackson2JsonMessageConverter(objectMapper);
+    }//VER COMO O CARINHA DA ALGAWORKS FEZ
         *
         *
          */
