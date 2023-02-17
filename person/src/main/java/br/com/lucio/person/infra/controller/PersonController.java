@@ -2,8 +2,8 @@ package br.com.lucio.person.infra.controller;
 
 import br.com.lucio.person.application.dto.PersonDTO;
 import br.com.lucio.person.application.service.PersonService;
-import br.com.lucio.person.infra.event.dto.PersonCrudEventDTO;
 import br.com.lucio.person.infra.event.dto.EventType;
+import br.com.lucio.person.infra.event.dto.PersonCrudEventDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
