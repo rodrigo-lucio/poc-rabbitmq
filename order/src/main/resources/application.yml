@@ -10,10 +10,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     show-sql: true
   rabbitmq:
-    host: jackal.rmq.cloudamqp.com
+    host: localhost
     port: 5672
-    username: qglfgzeu
-    password: AXpPhAHHQbPkH_osc1-vqwVubqZjD8c2
+    username: guest
+    password: guest
     virtual-host: qglfgzeu
 logging:
   level:
