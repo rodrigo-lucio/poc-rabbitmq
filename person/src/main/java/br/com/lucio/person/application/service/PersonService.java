@@ -9,7 +9,6 @@ import br.com.lucio.person.shared.translation.TranslationComponent;
 import br.com.lucio.person.shared.translation.TranslationConstants;
 import br.com.lucio.person.shared.util.Utils;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,14 +17,17 @@ import java.util.UUID;
 @Service
 public class PersonService {
 
-    @Autowired
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private TranslationComponent translation;
+    private final TranslationComponent translation;
+
+    public PersonService(PersonRepository personRepository, ModelMapper modelMapper, TranslationComponent translation) {
+        this.personRepository = personRepository;
+        this.modelMapper = modelMapper;
+        this.translation = translation;
+    }
 
     public PersonDTO getPerson(UUID id) {
         Person person = findPerson(id);

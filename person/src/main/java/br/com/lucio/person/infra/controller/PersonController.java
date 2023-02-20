@@ -4,7 +4,6 @@ import br.com.lucio.person.application.dto.PersonDTO;
 import br.com.lucio.person.application.service.PersonService;
 import br.com.lucio.person.infra.event.dto.EventType;
 import br.com.lucio.person.infra.event.dto.PersonCrudEventDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +18,14 @@ import java.util.UUID;
 @RequestMapping("/person")
 public class PersonController {
 
-    @Autowired
-    private PersonService personService;
+    private final PersonService personService;
 
-    @Autowired
-    private ApplicationEventPublisher publisher;
+    private final ApplicationEventPublisher publisher;
+
+    public PersonController(PersonService personService, ApplicationEventPublisher publisher) {
+        this.personService = personService;
+        this.publisher = publisher;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<PersonDTO> get(@PathVariable UUID id) {
