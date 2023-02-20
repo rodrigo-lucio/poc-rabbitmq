@@ -1,9 +1,8 @@
 package br.com.lucio.order.infra.event.dto;
 
+import br.com.lucio.order.application.dto.PersonDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import br.com.lucio.order.application.dto.PersonDTO;
 import lombok.ToString;
 
 @Data

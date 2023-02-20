@@ -1,7 +1,7 @@
 package br.com.lucio.order.infra.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.rabbit.config.DirectRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -13,7 +13,6 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 @Configuration

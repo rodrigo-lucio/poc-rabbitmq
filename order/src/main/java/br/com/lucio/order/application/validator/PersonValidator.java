@@ -7,7 +7,6 @@ import br.com.lucio.order.application.service.PersonService;
 import br.com.lucio.order.domain.entity.Person;
 import br.com.lucio.order.shared.translation.TranslationComponent;
 import br.com.lucio.order.shared.translation.TranslationConstants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;

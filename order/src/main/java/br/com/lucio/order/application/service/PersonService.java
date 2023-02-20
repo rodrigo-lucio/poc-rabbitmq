@@ -9,7 +9,6 @@ import br.com.lucio.order.infra.event.dto.PersonCrudEventDTO;
 import br.com.lucio.order.shared.translation.TranslationComponent;
 import br.com.lucio.order.shared.translation.TranslationConstants;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

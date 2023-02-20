@@ -1,6 +1,7 @@
 package br.com.lucio.order.infra.config;
 
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.ExchangeBuilder;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
