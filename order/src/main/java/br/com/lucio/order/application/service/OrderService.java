@@ -21,17 +21,20 @@ import java.util.UUID;
 @Service
 public class OrderService {
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    @Autowired
-    private PersonValidator personValidator;
+    private final PersonValidator personValidator;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private TranslationComponent translation;
+    private final TranslationComponent translation;
+
+    public OrderService(OrderRepository orderRepository, PersonValidator personValidator, ModelMapper modelMapper, TranslationComponent translation) {
+        this.orderRepository = orderRepository;
+        this.personValidator = personValidator;
+        this.modelMapper = modelMapper;
+        this.translation = translation;
+    }
 
     public OrderDTO getOrder(UUID id) {
         Order order = findOrder(id);

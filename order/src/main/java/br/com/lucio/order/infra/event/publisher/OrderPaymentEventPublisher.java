@@ -15,16 +15,17 @@ import java.util.List;
 @Slf4j
 public class OrderPaymentEventPublisher {
 
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
+
+    public OrderPaymentEventPublisher(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     @Async
     @EventListener
-    public void publishEvent(List<OrderPaymentDTO> paymentsCreated){
-        paymentsCreated.forEach(payment -> {
-            log.info("-----------> Publishing event payment created {}", payment);
-            rabbitTemplate.convertAndSend(EventsConstants.EXCHANGE_EVENTS_PAYMENT_CREATED, "", payment);
-        });
+    public void publishEvent(OrderPaymentDTO payment) {
+        log.info("-----------> Publishing event payment created {}", payment);
+        rabbitTemplate.convertAndSend(EventsConstants.EXCHANGE_EVENTS_PAYMENT_CREATED, "", payment);
     }
 
 }

@@ -18,17 +18,20 @@ import java.util.UUID;
 @Service
 public class PersonService {
 
-    @Autowired
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private TranslationComponent translation;
+    private final TranslationComponent translation;
+
+    public PersonService(PersonRepository personRepository, OrderRepository orderRepository, ModelMapper modelMapper, TranslationComponent translation) {
+        this.personRepository = personRepository;
+        this.orderRepository = orderRepository;
+        this.modelMapper = modelMapper;
+        this.translation = translation;
+    }
 
     @Transactional
     public void crudEvent(PersonCrudEventDTO personCrudEventDTO) {

@@ -2,6 +2,9 @@ package br.com.lucio.order.infra.controller;
 
 import br.com.lucio.order.application.dto.OrderDTO;
 import br.com.lucio.order.application.service.OrderService;
+import br.com.lucio.order.infra.config.EventsConstants;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +18,19 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/order")
+@Slf4j
 public class OrderController {
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
 
     @Autowired
     private OrderService orderService;
 
     @Autowired
     private ApplicationEventPublisher publisher;
+
 
     @GetMapping("/{id}")
     public OrderDTO get(@PathVariable UUID id) {
@@ -32,7 +41,7 @@ public class OrderController {
     public ResponseEntity<OrderDTO> create(@RequestBody @Valid OrderDTO dto, UriComponentsBuilder uriBuilder) {
         OrderDTO orderCreated = orderService.createOrder(dto);
         URI uri = uriBuilder.path("/order/{id}").buildAndExpand(orderCreated.getId()).toUri();
-        publisher.publishEvent(orderCreated.getPayments());
+        orderCreated.getPayments().forEach(payment -> publisher.publishEvent(payment));
         return ResponseEntity.created(uri).body(orderCreated);
     }
 

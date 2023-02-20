@@ -15,11 +15,14 @@ import java.util.Objects;
 @Component
 public class PersonValidator {
 
-    @Autowired
-    private PersonService personService;
+    private final PersonService personService;
 
-    @Autowired
-    private TranslationComponent translation;
+    private final TranslationComponent translation;
+
+    public PersonValidator(PersonService personService, TranslationComponent translation) {
+        this.personService = personService;
+        this.translation = translation;
+    }
 
     public Person validate(PersonDTO personDTO) {
         if (Objects.isNull(personDTO) || Objects.isNull(personDTO.getId())) {

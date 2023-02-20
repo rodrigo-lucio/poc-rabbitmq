@@ -24,11 +24,14 @@ import java.util.UUID;
 @RequestMapping("/order/{orderId}/item")
 public class OrderItemController {
 
-    @Autowired
-    private OrderItemService orderItemService;
+    private final OrderItemService orderItemService;
 
-    @Autowired
-    private PageDTOConverter<OrderItemDTO> converter;
+    private final PageDTOConverter<OrderItemDTO> converter;
+
+    public OrderItemController(OrderItemService orderItemService, PageDTOConverter<OrderItemDTO> converter) {
+        this.orderItemService = orderItemService;
+        this.converter = converter;
+    }
 
     @GetMapping("/{id}")
     public OrderItemDTO get(@PathVariable UUID orderId, @PathVariable UUID id) {

@@ -17,8 +17,11 @@ import java.io.IOException;
 @Slf4j
 public class PersonReplicationEventListener {
 
-    @Autowired
-    private PersonService service;
+    private final PersonService service;
+
+    public PersonReplicationEventListener(PersonService service) {
+        this.service = service;
+    }
 
     @RabbitListener(queues = EventsConstants.QUEUE_EVENTS_PERSON_CRUD, containerFactory = "rabbitListenerContainerFactory")
     public void personCreatedEventListener(PersonCrudEventDTO personCrudEventDTO,
