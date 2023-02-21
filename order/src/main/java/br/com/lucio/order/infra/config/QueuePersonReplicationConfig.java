@@ -19,7 +19,7 @@ public class QueuePersonReplicationConfig {
     }
 
     @Bean
-    public Binding bindingQueueCrueEventsPerson() {
+    public Binding bindingQueueCrudEventPerson() {
         return BindingBuilder.bind(queueCrudEventPerson()).to(fanoutExchangeCrudPerson());
     }
 
