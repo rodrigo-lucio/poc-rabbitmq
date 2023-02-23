@@ -11,26 +11,16 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderPaymentDTO {
 
-    @JsonIgnore
-    @JsonProperty(value = "id")
     private UUID id;
-
     private String creditCardNumber;
     private String cardHolderName;
     private Integer validityMonth;
     private Integer validityYear;
     private Integer securityCode;
     private BigDecimal amount;
-
-    @JsonIgnore
-    @JsonProperty(value = "status")
     private PaymentStatus status;
-
-    @JsonIgnore
-    @JsonProperty(value = "dateConfirmed")
     private LocalDateTime dateConfirmed;
 
 }
