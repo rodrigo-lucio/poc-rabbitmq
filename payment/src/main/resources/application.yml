@@ -3,7 +3,7 @@ spring:
     name: payment-service
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/person?useTimezone=true&serverTimezone=UTC
+    url: jdbc:postgresql://localhost:5432/payment?useTimezone=true&serverTimezone=UTC
     username: postgres
     password: postgres
   jpa:
