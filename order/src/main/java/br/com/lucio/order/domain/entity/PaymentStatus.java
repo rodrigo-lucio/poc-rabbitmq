@@ -6,5 +6,5 @@ public enum PaymentStatus {
     PROCESSING,
     CONFIRMED,
     UNAUTHORIZED,
-    ERRO
+    ERROR
 }
