@@ -1,4 +1,4 @@
-package br.com.lucio.order.shared.config;
+package br.com.lucio.order.infra.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
