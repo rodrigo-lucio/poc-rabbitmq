@@ -4,7 +4,7 @@ import br.com.lucio.person.application.dto.PersonDTO;
 import br.com.lucio.person.application.exception.ResourceNotFoundException;
 import br.com.lucio.person.domain.entity.Document;
 import br.com.lucio.person.domain.entity.Person;
-import br.com.lucio.person.domain.entity.PersonRepository;
+import br.com.lucio.person.infra.repository.PersonRepository;
 import br.com.lucio.person.shared.translation.TranslationComponent;
 import br.com.lucio.person.shared.translation.TranslationConstants;
 import br.com.lucio.person.shared.util.Utils;

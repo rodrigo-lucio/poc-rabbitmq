@@ -1,5 +1,6 @@
-package br.com.lucio.person.domain.entity;
+package br.com.lucio.person.infra.repository;
 
+import br.com.lucio.person.domain.entity.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
