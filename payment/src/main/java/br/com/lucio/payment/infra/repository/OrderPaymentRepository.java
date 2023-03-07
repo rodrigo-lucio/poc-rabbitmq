@@ -20,30 +20,33 @@ public interface OrderPaymentRepository extends JpaRepository<OrderPayment, UUID
 
     @Modifying
     @Transactional
-    @Query("update OrderPayment payment set payment.status = :status where payment.id = :id")
-    void updateStatusPayment(@Param("status") PaymentStatus status, @Param("id") UUID id);
+    @Query("update OrderPayment payment set payment.status = :status, payment.updatedAt = :currentDateTime where payment.id = :id")
+    void updateStatusPayment(@Param("status") PaymentStatus status,
+                             @Param("currentDateTime") LocalDateTime currentDatetime,
+                             @Param("id") UUID id);
 
     default void updateToProcessing(UUID id) {
-        updateStatusPayment(PaymentStatus.PROCESSING, id);
+        updateStatusPayment(PaymentStatus.PROCESSING, LocalDateTime.now(), id);
     }
 
     default void updateToReceived(UUID id) {
-        updateStatusPayment(PaymentStatus.RECEIVED, id);
+        updateStatusPayment(PaymentStatus.RECEIVED, LocalDateTime.now(), id);
     }
     @Modifying
     @Transactional
-    @Query("update OrderPayment payment set payment.status = :status, payment.dateConfirmed = :dateConfirmed where payment.id = :id")
+    @Query("update OrderPayment payment set payment.status = :status, payment.dateConfirmed = :dateConfirmed, " +
+            "payment.updatedAt = :currentDateTime where payment.id = :id")
     void updateStatusAndDateConfirmed(@Param("status") PaymentStatus status,
                            @Param("dateConfirmed") LocalDateTime dateConfirmed,
+                           @Param("currentDateTime") LocalDateTime currentDateTime,
                            @Param("id") UUID id);
     default void updateToUnauthorized(UUID id) {
-        updateStatusPayment(PaymentStatus.UNAUTHORIZED, id);
+        updateStatusPayment(PaymentStatus.UNAUTHORIZED, LocalDateTime.now(), id);
     }
 
     default void updateToErro(UUID id) {
-        updateStatusPayment(PaymentStatus.ERROR, id);
+        updateStatusPayment(PaymentStatus.ERROR, LocalDateTime.now(), id);
     }
-
 
     default boolean notExistsByIdAndStatusConfirmed(UUID id) {
         return !existsByIdAndStatus(id, PaymentStatus.CONFIRMED);
