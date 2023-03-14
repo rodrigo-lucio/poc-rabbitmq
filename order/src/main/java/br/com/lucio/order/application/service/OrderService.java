@@ -1,11 +1,13 @@
 package br.com.lucio.order.application.service;
 
 import br.com.lucio.order.application.dto.OrderDTO;
+import br.com.lucio.order.application.dto.PaymentProcessedDTO;
 import br.com.lucio.order.application.exception.ResourceNotFoundException;
 import br.com.lucio.order.application.exception.ServiceException;
 import br.com.lucio.order.application.validator.PersonValidator;
 import br.com.lucio.order.domain.entity.*;
-import br.com.lucio.order.domain.repository.OrderRepository;
+import br.com.lucio.order.infra.repository.OrderPaymentRepository;
+import br.com.lucio.order.infra.repository.OrderRepository;
 import br.com.lucio.order.shared.translation.TranslationComponent;
 import br.com.lucio.order.shared.translation.TranslationConstants;
 import br.com.lucio.order.shared.util.UtilsBigDecimal;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -22,14 +25,17 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
+    private final OrderPaymentRepository paymentRepository;
+
     private final PersonValidator personValidator;
 
     private final ModelMapper modelMapper;
 
     private final TranslationComponent translation;
 
-    public OrderService(OrderRepository orderRepository, PersonValidator personValidator, ModelMapper modelMapper, TranslationComponent translation) {
+    public OrderService(OrderRepository orderRepository, OrderPaymentRepository paymentRepository, PersonValidator personValidator, ModelMapper modelMapper, TranslationComponent translation) {
         this.orderRepository = orderRepository;
+        this.paymentRepository = paymentRepository;
         this.personValidator = personValidator;
         this.modelMapper = modelMapper;
         this.translation = translation;
@@ -109,4 +115,8 @@ public class OrderService {
         orderRepository.flush();
     }
 
+    @Transactional
+    public void updatePayment(PaymentProcessedDTO paymentProcessed)     {
+        paymentRepository.updateStatusPayment(paymentProcessed);
+    }
 }
