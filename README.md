@@ -1,4 +1,4 @@
-# POC: RabbitMQ com Spring Boot :rabbit:
+# :books: POC: RabbitMQ com Spring Boot :rabbit:
  - Repositório destinado a estudos sobre o RabbitMQ.
  - Serviços:
     - Person:
