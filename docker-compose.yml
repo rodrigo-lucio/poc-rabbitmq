@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+
+    banco-order:
+      image: postgres:14.7
+      container_name: banco-order
+      ports:
+        - 5433:5432
+      networks:
+        - my-network          
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=order    
+      volumes:
+        - /var/lib/volumes_docker/banco-order:/var/lib/postgresql/data              
+
+    rabbitmq:
+      image: rabbitmq:3.10-management
+      container_name: rabbitmq
+      ports:
+          - 5672:5672    
+          - 15672:15672     
+      networks:
+        - my-network      
+
+    order:
+      image: order
+      container_name: order
+      build: ./order     
+      ports:
+        - 8080:8080   
+      networks:
+        - my-network           
+      depends_on: 
+        - banco-order
+        - rabbitmq   
+      restart: always   
+      environment:
+        spring.datasource.url: jdbc:postgresql://banco-order:5432/order?useTimezone=true&serverTimezone=UTC
+        spring.datasource.username: postgres
+        spring.datasource.password: postgres      
+        spring.rabbitmq.host: rabbitmq
+        spring.rabbitmq.port: 5672
+        spring.rabbitmq.username: guest
+        spring.rabbitmq.password: guest    
+
+    banco-person:
+      image: postgres:14.7
+      container_name: banco-person
+      ports:
+        - 5434:5432
+      networks:
+        - my-network          
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=person    
+      volumes:
+        - /var/lib/volumes_docker/banco-person:/var/lib/postgresql/data     
+        
+    person:
+      image: person
+      container_name: person
+      build: ./person      
+      ports:
+        - 8082:8082   
+      networks:
+        - my-network           
+      depends_on: 
+        - banco-person
+        - rabbitmq   
+      restart: always     
+      environment:
+        spring.datasource.url: jdbc:postgresql://banco-person:5432/person?useTimezone=true&serverTimezone=UTC
+        spring.datasource.username: postgres
+        spring.datasource.password: postgres      
+        spring.rabbitmq.host: rabbitmq
+        spring.rabbitmq.port: 5672
+        spring.rabbitmq.username: guest
+        spring.rabbitmq.password: guest          
+   
+    banco-payment:
+      image: postgres:14.7
+      container_name: banco-payment
+      ports:
+        - 5435:5432
+      networks:
+        - my-network          
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=payment    
+      volumes:
+        - /var/lib/volumes_docker/banco-payment:/var/lib/postgresql/data        
+             
+    payment:
+      image: payment
+      container_name: payment
+      build: ./payment      
+      ports:
+        - 8083:8083   
+      networks:
+        - my-network           
+      depends_on: 
+        - banco-payment
+        - rabbitmq   
+      restart: always          
+      environment:
+        spring.datasource.url: jdbc:postgresql://banco-payment:5432/payment?useTimezone=true&serverTimezone=UTC
+        spring.datasource.username: postgres
+        spring.datasource.password: postgres      
+        spring.rabbitmq.host: rabbitmq
+        spring.rabbitmq.port: 5672
+        spring.rabbitmq.username: guest
+        spring.rabbitmq.password: guest
+        
+networks:
+  my-network:
+    driver: bridge                           
