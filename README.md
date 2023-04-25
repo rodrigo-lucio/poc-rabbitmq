@@ -12,6 +12,6 @@
         - Faz o processamento dos pagamentos com o gateway (simulação). 
         - Publica eventos de pagamento processado.
      
- - Testes de stress com vários processamentos simultâneos com controle de transação.
+ - Testes de stress com vários processamentos simultâneos com controle de transação distribuido.
  - Testes parando e subindo novamente o serviço de pagamentos, simulando um deploy enquanto os processos estão sendo executados.
  - Testes de replicação e consistência de dados entre os serviços.
